@@ -1,0 +1,102 @@
+<h1 class="text-center mt-5 text-success display-4">Registration Form</h1>
+<div class="pt-3">
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-10 col-md-12">
+            <div class="card border-0">
+                <div class="card-header text-success">Register to continue</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 text-center align-self-center">
+                            <img class="img-fluid" src="../../assets/images/logo.png">
+                        </div>
+                        <div class="col-md-4 pt-3">
+                            <form [formGroup]="registerForm" class="form-horizontal">
+                                    <div class="form-group">
+                                        <input placeholder="First Name" type="text"
+                                               formControlName="firstName"
+                                               required class="form-control mb-3" autofocus>
+                                        <div
+                                             *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                                            <p class="text-danger" *ngIf="!!firstName.errors.required">First Name is
+                                                required</p>
+                                        </div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <input placeholder="Last Name" type="text"
+                                           formControlName="lastName"
+                                           required class="form-control mb-3">
+                                    <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+                                        <p class="text-danger" *ngIf="!!lastName.errors.required">Last Name is
+                                            required</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control mb-3" formControlName="email"
+                                           placeholder="Email" required>
+                                    <div *ngIf="email.errors && (email.dirty || email.touched)">
+                                        <p class="text-danger" *ngIf="!!email.errors.required">Email is
+                                            required</p>
+                                        <p class="text-danger" *ngIf="!!email.errors.pattern">For example: "you@email.com"</p>
+                                    </div>
+                                    <p class="text-danger" *ngIf="loading">Email is already taken</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" class="form-control mb-3" formControlName="password"
+                                           placeholder="Password" required>
+                                    <div *ngIf="password.errors && (password.dirty || password.touched)">
+                                        <p class="text-danger" *ngIf="!!password.errors.required">Password is
+                                            required</p>
+                                        <p class="text-danger" *ngIf="!!password.errors.pattern">Password must be at least 6 characters and include a number</p>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-lg btn-outline-success btn-block mb-1" type="submit" (click)="registerUser()" [disabled]="registerForm.invalid">Register
+                                    </button>
+                            </form>
+                            <!--<form [formGroup]="registerForm" class="form-register">-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control mb-3" formControlName="firstName"-->
+                            <!--[ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"-->
+                            <!--placeholder="First Name" autofocus>-->
+                            <!--<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="f.firstName.errors.required">First Name is required</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control mb-3" formControlName="lastName"-->
+                            <!--[ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"-->
+                            <!--placeholder="Last Name">-->
+                            <!--<div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="f.lastName.errors.required">Last Name is required</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control mb-3" formControlName="email"-->
+                            <!--[ngClass]="{ 'is-invalid': submitted && f.email.errors }"-->
+                            <!--placeholder="Email">-->
+                            <!--<div *ngIf="submitted && f.email.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="f.email.errors.required">Email is required</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control mb-3" formControlName="password"-->
+                            <!--[ngClass]="{ 'is-invalid': submitted && f.password.errors }"-->
+                            <!--placeholder="password">-->
+                            <!--<div *ngIf="submitted && f.password.errors" class="invalid-feedback">-->
+                            <!--<div *ngIf="f.password.errors.required">Password is required</div>-->
+                            <!--<div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--<button class="btn btn-lg btn-outline-success btn-block mb-1" type="submit" (click)="registerUser()">Register-->
+                            <!--</button>-->
+                            <!--</form>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
