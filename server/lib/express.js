@@ -10,7 +10,7 @@ const app = express();
 app.use( morgan( 'dev' ) );
 app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( { 'extended': true } ) );
-app.use( express.static( path.join( process.cwd(), __dirname, 'dist', 'index.html' ) ) );
+app.use( express.static( path.join( process.cwd(), 'codeep-hr-tool/server/dist/codeep-hr-tool/index.html' ) ) );
 app.use( ( req, res, next ) => {
     res.setHeader( 'Access-Control-Allow-Origin', 'http://localhost:4200' );
     res.setHeader( 'Access-Control-Allow-Methods', 'GET, POST' );
@@ -26,7 +26,7 @@ app.get( '/user', ( req, res ) => {
 } );
 
 app.get( '/*', ( req, res ) => {
-    res.sendFile( path.join( process.cwd(), __dirname, 'dist', 'index.html' ) );
+    res.sendFile( path.join( process.cwd(), 'codeep-hr-tool/server/dist/codeep-hr-tool/index.html' ) );
 
 } );
 
