@@ -26,7 +26,7 @@ app.get( '/user', ( req, res ) => {
 } );
 
 app.get( '/*', ( req, res ) => {
-    res.sendFile( path.join( process.cwd(), 'dist/codeep-hr-tool/index.html' ) );
+    res.sendFile( path.join( process.cwd(), '/dist/codeep-hr-tool/index.html' ) );
 } );
 
 export default app;
