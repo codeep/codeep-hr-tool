@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
     api: {
-        apiUrl: 'http://localhost:3000',
+        apiUrl: 'https://codeep-hr-tool.herokuapp.com',
     }
 };
