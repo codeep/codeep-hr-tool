@@ -5,9 +5,7 @@ import { init } from './lib/mongoose';
 init();
 
 
-const express = require( 'express' ),
-    router = express.Router(),
-    mongoose = require( 'mongoose' );
+const mongoose = require( 'mongoose' );
 
 mongoose.connect( config.db );
 
@@ -22,5 +20,8 @@ db.once( 'open', () => {
 // const users = require('./api/modules/users/users.routes');
 
 app.listen( config.port, ( err ) => {
+    if ( err ) {
+        return console.log( err );
+    }
     console.log( 'port', config.port );
 } );
