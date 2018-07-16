@@ -26,7 +26,8 @@ app.get( '/user', ( req, res ) => {
 } );
 
 app.get( '/*', ( req, res ) => {
-    res.sendFile( path.join( process.cwd(), __dirname, 'build', 'index.html' ) );
+    res.sendFile( path.join( process.cwd(), __dirname, 'dist', 'index.html' ) );
+
 } );
 
 export default app;
