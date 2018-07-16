@@ -9,7 +9,6 @@ const valid = new Validation(),
 export function init( api ) {
     const router = new Router();
 
-    router.get( '/', reg.getAllUsers );
     router.post( '/registration', valid.createValidationFor( 'registration' ), reg.regNewUser );
     router.post( '/login', reg.checkAuth );
     router.post( '/verification', reg.refreshCode );
