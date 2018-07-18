@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
 import { Mailer } from '../../../lib/mailer';
 
+
 const mailer = new Mailer(),
+
     passwordHash = require( 'password-hash' ),
     User = mongoose.model( 'User' );
 
@@ -51,24 +53,57 @@ export class Registration {
             } );
     }
 
-    checkAuth( req, res ) {
-        const email = req.body.email,
+    login( req, res ) {
+        const sid = req.sessionID,
+            email = req.body.email,
             password = req.body.password;
 
         User.findOne( { 'email': email, 'status': 'active' } ).then( ( user ) => {
 
             if ( passwordHash.verify( password, user.password ) === true ) {
                 res.status( 200 ).send( {
+                    'cookie': sid,
                     'status': 'confirm',
                     'id': user.id
                 } );
             } else {
                 res.status( 422 ).json( { 'errors': 'wrong password' } );
+                console.log( req.session, sid );
+
+
             }
+
         } ).catch( () => {
             res.status( 422 ).json( { 'errors': 'wrong password or email' } );
         } );
 
+    }
+
+    logout( req, res ) {
+        if ( req.session ) {
+
+            res.status( 200 ).send( {
+                'status': 'OK'
+            } );
+            req.session.destroy( ( error ) => {
+                if ( error ) {
+                    console.log( error );
+                }
+            } );
+        }
+    }
+
+    checkSession( req, res ) {
+        const cookieId = req.body.cookieId;
+
+        console.log( cookieId, req.sessionID );
+        if ( req.sessionID === cookieId ) {
+            res.status( 200 ).send( {
+                'status': 'OK'
+            } );
+        }// else {
+        //     res.redirect( '/login' );
+        // }
     }
 
     confirmCodeAndLogin( req, res ) {
@@ -99,7 +134,8 @@ export class Registration {
         User.findByIdAndUpdate( id ).then( ( user ) => {
             if ( !user ) {
                 return res.status( 404 ).send();
-            } user.code = ( Math.floor( Math.random() * ( 9999 - 1000 + 1 ) ) + 1000 ).toString();
+            }
+            user.code = ( Math.floor( Math.random() * ( 9999 - 1000 + 1 ) ) + 1000 ).toString();
             user.save();
             mailer.sendMail( user.email, user.code );
             res.status( 200 ).send( {

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
-
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
     selector: 'app-login',
@@ -16,16 +16,19 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     email: FormControl;
     password: FormControl;
+    cookieId: any;
 
     constructor(
         private authenticationService: AuthenticationService,
-        private router: Router
+        private router: Router,
+        private cookieService: CookieService
     ) {
     }
 
     ngOnInit() {
         this.createFormControls();
         this.createForm();
+        this.getCookie();
     }
 
     createFormControls() {
@@ -64,20 +67,26 @@ export class LoginComponent implements OnInit {
             error => {
 
                 if (error.error.errors === 'wrong password or email') {
-                        this.loading = true;
-                    setTimeout(()=> {
+                    this.loading = true;
+                    setTimeout(() => {
                         this.loading = false;
                     }, 2000);
                 }
                 if (error.error.errors === 'wrong password') {
                     this.loading_1 = true;
-                    setTimeout(()=> {
+                    setTimeout(() => {
                         this.loading_1 = false;
                     }, 2000);
                 }
             });
     }
 
+    getCookie() {
+        this.cookieId = this.cookieService.get('currentUser');
+        this.authenticationService.checkUserSession({'cookieId': this.cookieId}).subscribe(
+            res => console.log(res)
+        )
+    }
 }
 
 //|| error.error === 'wrong password'

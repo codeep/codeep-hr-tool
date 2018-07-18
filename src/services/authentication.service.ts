@@ -19,15 +19,20 @@ export class AuthenticationService {
             .pipe(map(user => {
                 this.cookieValue = user;
                 if (user) {
-                    this.cookieService.set( 'currentUser',JSON.stringify(this.cookieValue.id));
+                    this.cookieService.set( 'currentUser',JSON.stringify(this.cookieValue.cookie));
                     // localStorage.setItem('currentUser', JSON.stringify(user));
                 }
                 return user;
             }));
   }
 
-    logout() {
+    logout(obj) {
         // remove user from Cookies to log user out
         this.cookieService.delete('currentUser');
+        return this.http.post(`${environment.api.apiUrl}/api/users/logout`, obj);
+    }
+
+    checkUserSession (obj) {
+        return this.http.post(`${environment.api.apiUrl}/api/users/session`,obj);
     }
 }
