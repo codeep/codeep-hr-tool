@@ -8,7 +8,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthenticationService {
-    cookieValue: any;
+    expiredDate: any;
+    data: any;
     constructor(
         private http: HttpClient,
         private cookieService: CookieService
@@ -16,23 +17,25 @@ export class AuthenticationService {
 
     login(user:User) {
         return this.http.post(`${environment.api.apiUrl}/api/users/login`, user)
-            .pipe(map(user => {
-                this.cookieValue = user;
-                if (user) {
-                    this.cookieService.set( 'currentUser',JSON.stringify(this.cookieValue.cookie));
+            .pipe(map(data => {
+                this.data = data;
+                if (data) {
+                    this.expiredDate =  new Date();
+                    this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
+                    this.cookieService.set( 'cookieId',JSON.stringify(this.data.cookie),this.expiredDate);
                     // localStorage.setItem('currentUser', JSON.stringify(user));
                 }
-                return user;
+                return data;
             }));
   }
 
     logout(obj) {
         // remove user from Cookies to log user out
-        this.cookieService.delete('currentUser');
+        this.cookieService.delete('cookieId');
         return this.http.post(`${environment.api.apiUrl}/api/users/logout`, obj);
     }
 
     checkUserSession (obj) {
-        return this.http.post(`${environment.api.apiUrl}/api/users/session`,obj);
+        return this.http.post(`${environment.api.apiUrl}/api/users/user/isLoggedIn`,obj);
     }
 }

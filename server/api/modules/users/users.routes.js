@@ -14,7 +14,7 @@ export function init( api ) {
     router.post( '/verification', reg.refreshCode );
     router.post( '/confirm', reg.confirmCodeAndLogin );
     router.post( '/logout', reg.logout );
-    router.post( '/session', reg.checkSession );
+    router.post( 'user/isLoggedIn', reg.isLogged );
 
     api.use( '/users', router );
 }

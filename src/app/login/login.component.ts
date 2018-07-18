@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.createFormControls();
         this.createForm();
-        this.getCookie();
+        this.isLoggedIn();
     }
 
     createFormControls() {
@@ -81,12 +81,12 @@ export class LoginComponent implements OnInit {
             });
     }
 
-    getCookie() {
-        this.cookieId = this.cookieService.get('currentUser');
+    isLoggedIn() {
+        this.cookieId = this.cookieService.get('cookieId');
+        console.log(this.cookieId, 'cookie id');
         this.authenticationService.checkUserSession({'cookieId': this.cookieId}).subscribe(
             res => console.log(res)
         )
     }
 }
 
-//|| error.error === 'wrong password'

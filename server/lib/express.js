@@ -6,8 +6,8 @@ import path from 'path';
 import api from '../api';
 
 const app = express(),
-    session = require( 'express-session' );
-
+    session = require( 'express-session' ),
+    cookieParser = require( 'cookie-parser' );
 
 app.use( morgan( 'dev' ) );
 app.use( bodyParser.json() );
@@ -20,14 +20,11 @@ app.use( ( req, res, next ) => {
     res.setHeader( 'Access-Control-Allow-Credentials', true );
     next();
 } );
-app.use( session( {
-    'secret': '34SDgsdgspxxxxxxxdfsG',
-    'resave': false,
-    'saveUninitialized': true,
-    'cookie':
-        { 'path': '/',
-            'httpOnly': true,
-            '_expires': new Date( Date.now() + 3600000 ) } } ) );
+app.use( cookieParser() );
+app.use( session( { 'secret': 'vsdvfdsfdsfds435435Argt',
+    'cookie': { 'maxAge': null },
+    'expires': false
+} ) );
 
 
 app.use( '/api', api );

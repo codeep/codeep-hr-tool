@@ -54,7 +54,7 @@ export class Registration {
     }
 
     login( req, res ) {
-        const sid = req.sessionID,
+        const sid = req.session.id,
             email = req.body.email,
             password = req.body.password;
 
@@ -93,17 +93,20 @@ export class Registration {
         }
     }
 
-    checkSession( req, res ) {
+    isLogged( req, res ) {
+
         const cookieId = req.body.cookieId;
 
-        console.log( cookieId, req.sessionID );
+        console.log( cookieId, 'cookieID' );
+        console.log( req.session.id, 'sessionId' );
+        console.log( req.sessionID, 'sessionId' );
         if ( req.sessionID === cookieId ) {
             res.status( 200 ).send( {
                 'status': 'OK'
             } );
-        }// else {
-        //     res.redirect( '/login' );
-        // }
+        } else {
+            res.status( 401 ).send();
+        }
     }
 
     confirmCodeAndLogin( req, res ) {
